@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About  Md.Hajiimran</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: linear-gradient(135deg, #1d2671, #c33764);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      width: 400px;
+      max-width: 95%;
+      height: 90vh;
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .header {
+      background: #4a148c;
+      color: white;
+      padding: 18px;
+      text-align: center;
+      font-size: 20px;
+      font-weight: 600;
+    }
+
+    .messages {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+      background: #f8f9fa;
+    }
+
+    .msg {
+      margin-bottom: 12px;
+      padding: 12px 16px;
+      border-radius: 18px;
+      max-width: 85%;
+      font-size: 15px;
+      line-height: 1.45;
+    }
+
+    .user {
+      background: #4a148c;
+      color: white;
+      align-self: flex-end;
+      margin-left: auto;
+    }
+
+    .bot {
+      background: #e9ecef;
+      color: #212529;
+      align-self: flex-start;
+      margin-right: auto;
+    }
+
+    .input-box {
+      display: flex;
+      border-top: 1px solid #ddd;
+      padding: 12px;
+    }
+
+    .input-box input {
+      flex: 1;
+      padding: 14px 16px;
+      border: none;
+      outline: none;
+      font-size: 15px;
+      border-radius: 12px;
+      background: #f1f3f5;
+    }
+
+    .input-box button {
+      margin-left: 8px;
+      padding: 14px 20px;
+      background: #4a148c;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .input-box button:hover {
+      background: #2e0f5f;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <div class="header">Talk to Md Hajiimran</div>
+
+    <div class="messages" id="messages">
+      <div class="msg bot">
+        Heyy! 👋 What's up? You can ask me anything about myself — studies, goals, hobbies, or just chat casually 😄
+      </div>
+    </div>
+
+    <div class="input-box">
+      <input type="text" id="userInput" placeholder="Ask me anything..." />
+      <button onclick="sendMessage()">Send</button>
+    </div>
+  </div>
+
+  <script>
+    function sendMessage() {
+      const input = document.getElementById("userInput");
+      const msg = input.value.trim();
+      if (!msg) return;
+
+      addMsg(msg, "user");
+      input.value = "";
+
+      const lowerMsg = msg.toLowerCase();
+      let reply = "Haha, nice one! 😄 What else is on your mind?";
+
+      // Common casual conversation
+      if (lowerMsg.includes("hi") || lowerMsg.includes("hello") || lowerMsg.includes("hey") || lowerMsg.includes("sup")) {
+        reply = "Heyy! 😎 How's your day going?";
+      }
+      else if (lowerMsg.includes("how are you") || lowerMsg.includes("how r u") || lowerMsg.includes("hru")) {
+        reply = "I'm good bro! Just chilling, coding, and dreaming big 😄 You good?";
+      }
+      else if (lowerMsg.includes("what's up") || lowerMsg.includes("wassup") || lowerMsg.includes("wsg")) {
+        reply = "Not much, just vibing 😏 You tell me, what's good?";
+      }
+      else if (lowerMsg.includes("haha") || lowerMsg.includes("lol") || lowerMsg.includes("lmao")) {
+        reply = "Haha same! 😂 What's so funny?";
+      }
+      else if (lowerMsg.includes("nice") || lowerMsg.includes("cool") || lowerMsg.includes("awesome")) {
+        reply = "Thanks bro! 😄 You too!";
+      }
+      else if (lowerMsg.includes("thank") || lowerMsg.includes("thanks")) {
+        reply = "No problem at all! 😊 Anytime.";
+      }
+      else if (lowerMsg.includes("bye") || lowerMsg.includes("goodbye") || lowerMsg.includes("see you")) {
+        reply = "Bye bro! Take care 😄 Come back anytime!";
+      }
+      else if (lowerMsg.includes("joke") || lowerMsg.includes("funny")) {
+        reply = "Why do programmers prefer dark mode? Because light attracts bugs! 😂😂";
+      }
+      else if (lowerMsg.includes("compliment") || lowerMsg.includes("good looking") || lowerMsg.includes("handsome")) {
+        reply = "Haha stop it, you're making me blush 😅 Thanks though!";
+      }
+
+      // Personal info (updated to Md Hajiimran)
+      else if (lowerMsg.includes("who are you") || lowerMsg.includes("about you") || lowerMsg.includes("tell me about yourself") || lowerMsg.includes("about hajiimran") || lowerMsg.includes("who is hajiimran")) {
+        reply = "I'm Md Hajiimran from Shadnagar, Telangana. B.Tech IT student. Scored 8.2 CGPA in 10th, 691 in Inter (MPC). Single, focused on career, love coding & self-growth. Insta: https://www.instagram.com/official__ajju__786?igsh=am1lMTZzNW9rY3N2";
+      }
+      else if (lowerMsg.includes("goal") || lowerMsg.includes("future") || lowerMsg.includes("dream") || lowerMsg.includes("career")) {
+        reply = "I want to become a top software engineer, get a high-paying job, and make my family proud. Short-term: strong projects + internship. Long-term: live comfortably and help others.";
+      }
+      else if (lowerMsg.includes("hobby") || lowerMsg.includes("hobbies") || lowerMsg.includes("like to do") || lowerMsg.includes("free time")) {
+        reply = "Coding projects, playing volleyball, gaming (Free Fire), and watching Turkish dramas — especially with my favorite actress, Özge Törer!";
+      }
+      else if (lowerMsg.includes("actress") || lowerMsg.includes("ozge") || lowerMsg.includes("favorite actress")) {
+        reply = "Özge Törer! She's unreal in Kurulus Osman — such powerful acting!";
+      }
+      else if (lowerMsg.includes("study") || lowerMsg.includes("marks") || lowerMsg.includes("10th") || lowerMsg.includes("inter") || lowerMsg.includes("cgpa") || lowerMsg.includes("subject") || lowerMsg.includes("education")) {
+        reply = "8.2 CGPA in 10th, 691 in Intermediate (MPC). Favorite subjects: Physics and Computer Science — love the logic and creativity!";
+      }
+      else if (lowerMsg.includes("place") || lowerMsg.includes("from") || lowerMsg.includes("shadnagar") || lowerMsg.includes("telangana")) {
+        reply = "Shadnagar, Telangana — small town, big dreams, amazing food, and strong family vibes!";
+      }
+else if (
+  lowerMsg.includes("aim") ||
+  lowerMsg.includes("goal") ||
+  lowerMsg.includes("future") ||
+  lowerMsg.includes("dream")
+) {
+  reply = "My aim is to become a successful IT engineer, build meaningful projects, secure a high-paying job, and make my parents proud.";
+}
+
+else if (
+  lowerMsg.includes("hobby") ||
+  lowerMsg.includes("hobbies")
+) {
+  reply = "My hobbies include coding projects, playing volleyball, gaming (Free Fire), learning new technologies, and watching Turkish dramas.";
+}
+
+else if (
+  lowerMsg.includes("habit") ||
+  lowerMsg.includes("habits") ||
+  lowerMsg.includes("daily routine")
+) {
+  reply = "My daily habits are practicing coding regularly, thinking deeply before making decisions, staying calm, and focusing on self-improvement.";
+}
+
+else if (
+  lowerMsg.includes("love") ||
+  lowerMsg.includes("relationship") ||
+  lowerMsg.includes("feelings")
+) {
+  reply = "I believe in real love, emotional bonding, loyalty, and honesty. I feel deeply, get attached easily, and stay committed.";
+}
+
+else if (
+  lowerMsg.includes("pain") ||
+  lowerMsg.includes("hurt") ||
+  lowerMsg.includes("sad")
+) {
+  reply = "I’ve experienced emotional pain and silent struggles. Those moments shaped me into a stronger and more mature person.";
+}
+
+else if (
+  lowerMsg.includes("nature") ||
+  lowerMsg.includes("personality") ||
+  lowerMsg.includes("type of person")
+) {
+  reply = "I’m calm, emotional, loyal, respectful, and thoughtful. I speak less, observe more, and value actions over words.";
+}
+
+else if (
+  lowerMsg.includes("good habit") ||
+  lowerMsg.includes("strength")
+) {
+  reply = "My strengths are honesty, patience, discipline, loyalty, and staying focused on my goals.";
+}
+
+else if (
+  lowerMsg.includes("bad habit") ||
+  lowerMsg.includes("weakness")
+) {
+  reply = "Sometimes I overthink, trust people too easily, and keep my emotions inside instead of expressing them.";
+}
+
+else if (
+  lowerMsg.includes("favorite") ||
+  lowerMsg.includes("favourite")
+) {
+  reply = "My favorite things include spicy food, volleyball, programming, Turkish dramas, Özge Törer, and peaceful alone time.";
+}
+
+else if (
+  lowerMsg.includes("family") ||
+  lowerMsg.includes("home") ||
+  lowerMsg.includes("parents")
+) {
+  reply = "My family means everything to me. My favorite people are my mom, dad, brother, MOHD.Rabbani Irfan.";
+}
+else if (
+  lowerMsg.includes("college") ||
+  lowerMsg.includes("studing") 
+) {
+  reply = "present studing in LORDS ENGINNERING COLLEGE, B.E 1st year   IT .";
+}
+else if (
+  lowerMsg.includes("friends") ||
+  lowerMsg.includes("best friends")
+) {
+  reply = ", school : fayaz, adnan , moiz, sameer \n inter : salman , tameem , \n B.tech : Aayzan , rafi , maviya , muzakir , muquit  ";
+}
+else if (
+  lowerMsg.includes("dislike") ||
+  lowerMsg.includes("hate")
+) {
+  reply = "I dislike fake people, disrespect, lies, unnecessary drama, and  Girls.";
+}
+else if (
+  lowerMsg.includes("ok") ||
+  lowerMsg.includes("hmm")
+) {
+  reply = " Do u want to know any thing about Hajiimran or his instagramm id ";
+}
+
+else if (
+  lowerMsg.includes("mindset") ||
+  lowerMsg.includes("thinking")
+) {
+  reply = "I think deeply before acting and prefer understanding situations calmly rather than reacting emotionally.";
+}
+
+      else if (lowerMsg.includes("love") || lowerMsg.includes("girlfriend") || lowerMsg.includes("single") || lowerMsg.includes("relationship") || lowerMsg.includes("virgin")) {
+        reply = "Single and virgin. 100% focused on my studies and career right now — no time for distractions!";
+      }
+      else if (lowerMsg.includes("instagram") || lowerMsg.includes("insta")) {
+        reply = "Follow me: https://www.instagram.com/official__ajju__786?igsh=am1lMTZzNW9rY3N2";
+      }
+
+      // Fallback
+      else {
+        reply = "Haha, interesting  But not Updated ! 😄 Ask me anything — studies, goals, hobbies, or just random stuff. What's next?";
+      }
+
+      setTimeout(() => addMsg(reply, "bot"), 700);
+    }
+
+    function addMsg(text, type) {
+      const div = document.createElement("div");
+      div.className = `msg ${type}`;
+      div.textContent = text;
+      document.getElementById("messages").appendChild(div);
+      document.getElementById("messages").scrollTop = document.getElementById("messages").scrollHeight;
+    }
+  </script>
+
+</body>
+</html>
