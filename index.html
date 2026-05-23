@@ -1,313 +1,255 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>About  Md.Hajiimran</title>
-
-  <style>
-    body {
-      margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background: linear-gradient(135deg, #1d2671, #c33764);
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .container {
-      width: 400px;
-      max-width: 95%;
-      height: 90vh;
-      background: white;
-      border-radius: 16px;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .header {
-      background: #4a148c;
-      color: white;
-      padding: 18px;
-      text-align: center;
-      font-size: 20px;
-      font-weight: 600;
-    }
-
-    .messages {
-      flex: 1;
-      padding: 20px;
-      overflow-y: auto;
-      background: #f8f9fa;
-    }
-
-    .msg {
-      margin-bottom: 12px;
-      padding: 12px 16px;
-      border-radius: 18px;
-      max-width: 85%;
-      font-size: 15px;
-      line-height: 1.45;
-    }
-
-    .user {
-      background: #4a148c;
-      color: white;
-      align-self: flex-end;
-      margin-left: auto;
-    }
-
-    .bot {
-      background: #e9ecef;
-      color: #212529;
-      align-self: flex-start;
-      margin-right: auto;
-    }
-
-    .input-box {
-      display: flex;
-      border-top: 1px solid #ddd;
-      padding: 12px;
-    }
-
-    .input-box input {
-      flex: 1;
-      padding: 14px 16px;
-      border: none;
-      outline: none;
-      font-size: 15px;
-      border-radius: 12px;
-      background: #f1f3f5;
-    }
-
-    .input-box button {
-      margin-left: 8px;
-      padding: 14px 20px;
-      background: #4a148c;
-      color: white;
-      border: none;
-      border-radius: 12px;
-      cursor: pointer;
-      font-weight: 600;
-    }
-
-    .input-box button:hover {
-      background: #2e0f5f;
-    }
-  </style>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Neural Chat 8D — Groq + Claude</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --c1:#0a0a12;--c2:#0f0f1e;--c3:#13132a;
+  --groq:#00e5ff;--acc:#a855f7;
+  --txt:#e2e8f0;--txt2:#94a3b8;--txt3:#475569;
+}
+body{background:#05050e;display:flex;align-items:center;justify-content:center;min-height:100vh;font-family:'Segoe UI',system-ui,sans-serif}
+#shell{background:var(--c1);border:1px solid rgba(0,229,255,0.2);border-radius:18px;overflow:hidden;width:760px;height:680px;display:flex;flex-direction:column;box-shadow:0 0 60px rgba(0,229,255,0.06)}
+#topbar{background:var(--c2);border-bottom:1px solid rgba(0,229,255,0.1);padding:11px 18px;display:flex;align-items:center;gap:10px}
+.lbadge{display:flex;align-items:center;gap:5px;padding:4px 11px;border-radius:20px;font-size:11px;font-weight:600;letter-spacing:.05em}
+.bg-groq{background:rgba(0,229,255,0.1);color:var(--groq);border:1px solid rgba(0,229,255,0.25)}
+.bg-claude{background:rgba(168,85,247,0.1);color:var(--acc);border:1px solid rgba(168,85,247,0.25)}
+#tb-title{font-size:14px;font-weight:600;color:var(--txt);margin:0 auto;letter-spacing:.02em}
+#mtoggle{display:flex;border:1px solid rgba(0,229,255,0.2);border-radius:10px;overflow:hidden}
+.mbtn{padding:5px 14px;font-size:12px;font-weight:600;cursor:pointer;border:none;transition:all 0.2s;background:transparent;color:var(--txt2)}
+.mbtn.groq.on{background:rgba(0,229,255,0.15);color:var(--groq)}
+.mbtn.claude.on{background:rgba(168,85,247,0.15);color:var(--acc)}
+#body{display:flex;flex:1;overflow:hidden}
+#sidebar{width:210px;flex-shrink:0;border-right:1px solid rgba(0,229,255,0.08);background:var(--c2);display:flex;flex-direction:column}
+#sh{padding:12px 12px 8px;border-bottom:1px solid rgba(0,229,255,0.08)}
+#nb{width:100%;padding:7px 10px;font-size:12px;font-weight:600;background:rgba(0,229,255,0.08);color:var(--groq);border:1px solid rgba(0,229,255,0.2);border-radius:8px;cursor:pointer;display:flex;align-items:center;gap:6px;transition:background 0.15s}
+#nb:hover{background:rgba(0,229,255,0.18)}
+#cl{flex:1;overflow-y:auto;padding:8px}
+#cl::-webkit-scrollbar{width:3px}
+#cl::-webkit-scrollbar-thumb{background:rgba(0,229,255,0.15);border-radius:2px}
+.ci{padding:7px 9px;border-radius:7px;font-size:12px;color:var(--txt2);cursor:pointer;margin-bottom:2px;display:flex;align-items:center;gap:7px;overflow:hidden;border:1px solid transparent;transition:all 0.15s}
+.ci:hover{background:rgba(255,255,255,0.04);color:var(--txt)}
+.ci.on{background:rgba(0,229,255,0.06);color:var(--txt);border-color:rgba(0,229,255,0.15)}
+.ci span:last-child{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cdot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.dg{background:var(--groq)}.dc{background:var(--acc)}
+#apikey-section{padding:10px 12px;border-top:1px solid rgba(0,229,255,0.08)}
+#apikey-section p{font-size:10px;color:var(--txt3);margin-bottom:5px;letter-spacing:.06em;text-transform:uppercase}
+#apikey-inp{width:100%;font-size:11px;padding:6px 8px;background:var(--c3);color:var(--groq);border:1px solid rgba(0,229,255,0.2);border-radius:6px;outline:none;font-family:monospace}
+#apikey-inp::placeholder{color:var(--txt3)}
+#api-status{font-size:10px;margin-top:5px}
+.api-ok{color:#4ade80}.api-no{color:#f87171}.api-hint{color:var(--txt3)}
+#sf{padding:10px 12px;border-top:1px solid rgba(0,229,255,0.08)}
+#sf p{font-size:10px;color:var(--txt3);margin-bottom:5px;letter-spacing:.06em;text-transform:uppercase}
+#psel{width:100%;font-size:11px;padding:5px 7px;background:var(--c3);color:var(--txt);border:1px solid rgba(0,229,255,0.2);border-radius:6px}
+#main{flex:1;display:flex;flex-direction:column;min-width:0;background:var(--c1)}
+#msgs{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px}
+#msgs::-webkit-scrollbar{width:3px}
+#msgs::-webkit-scrollbar-thumb{background:rgba(0,229,255,0.12);border-radius:2px}
+#empty{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:var(--txt3);padding-bottom:30px}
+.eorb{width:60px;height:60px;border-radius:50%;border:1px solid rgba(0,229,255,0.25);display:flex;align-items:center;justify-content:center;font-size:28px;background:var(--c2)}
+#empty p{font-size:15px;color:var(--txt2);font-weight:500}
+#empty small{font-size:12px;color:var(--txt3)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;justify-content:center;max-width:380px}
+.chip{font-size:11px;padding:5px 12px;border-radius:20px;border:1px solid rgba(0,229,255,0.18);color:var(--txt2);background:var(--c2);cursor:pointer;transition:all 0.15s}
+.chip:hover{border-color:var(--groq);color:var(--groq);background:rgba(0,229,255,0.05)}
+.mrow{display:flex;gap:8px;align-items:flex-end}
+.mrow.usr{flex-direction:row-reverse}
+.aico{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;flex-shrink:0}
+.ico-groq{background:rgba(0,229,255,0.1);color:var(--groq);border:1px solid rgba(0,229,255,0.2)}
+.ico-claude{background:rgba(168,85,247,0.1);color:var(--acc);border:1px solid rgba(168,85,247,0.2)}
+.bwrap{display:flex;flex-direction:column;max-width:74%}
+.mtag{font-size:9px;font-weight:600;letter-spacing:.06em;padding:2px 7px;border-radius:10px;margin-bottom:3px;display:inline-block;width:fit-content}
+.tg{background:rgba(0,229,255,0.1);color:var(--groq)}
+.tc{background:rgba(168,85,247,0.1);color:var(--acc)}
+.bub{padding:10px 14px;border-radius:14px;font-size:13px;line-height:1.65;word-break:break-word;white-space:pre-wrap}
+.bg{background:rgba(0,229,255,0.05);color:var(--txt);border:1px solid rgba(0,229,255,0.14);border-bottom-left-radius:3px}
+.bc{background:rgba(168,85,247,0.06);color:var(--txt);border:1px solid rgba(168,85,247,0.14);border-bottom-left-radius:3px}
+.bu{background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff;border-bottom-right-radius:3px}
+.berr{background:rgba(239,68,68,0.08);color:#f87171;border:1px solid rgba(239,68,68,0.2)}
+.dots span{display:inline-block;width:5px;height:5px;border-radius:50%;margin:0 2px;animation:dp 1.2s infinite}
+.dots span:nth-child(2){animation-delay:.2s}
+.dots span:nth-child(3){animation-delay:.4s}
+@keyframes dp{0%,60%,100%{transform:translateY(0);opacity:.4}30%{transform:translateY(-4px);opacity:1}}
+.dg-dots span{background:var(--groq)}.dc-dots span{background:var(--acc)}
+#iz{padding:12px 14px;border-top:1px solid rgba(0,229,255,0.1);background:var(--c2)}
+#iw{display:flex;gap:8px;align-items:flex-end;background:var(--c3);border:1px solid rgba(0,229,255,0.18);border-radius:12px;padding:9px 11px;transition:border-color 0.2s}
+#iw:focus-within{border-color:rgba(0,229,255,0.45)}
+#ti{flex:1;background:transparent;border:none;outline:none;color:var(--txt);font-size:13px;resize:none;min-height:20px;max-height:90px;line-height:1.5;font-family:inherit}
+#ti::placeholder{color:var(--txt3)}
+#sb{width:34px;height:34px;border-radius:9px;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;transition:all 0.15s}
+#sb.sg{background:var(--groq);color:#0a0a12}
+#sb.sc{background:var(--acc);color:#fff}
+#sb:hover{opacity:0.85;transform:scale(1.05)}
+#sb:disabled{background:var(--c3);color:var(--txt3);cursor:not-allowed;transform:none}
+#hint{font-size:10px;color:var(--txt3);margin-top:6px;display:flex;align-items:center;gap:8px}
+.hb{font-size:10px;padding:2px 8px;border-radius:10px;margin-left:auto;font-weight:500}
+.hbg{background:rgba(0,229,255,0.08);color:var(--groq)}
+.hbc{background:rgba(168,85,247,0.08);color:var(--acc)}
+</style>
 </head>
-
 <body>
-
-  <div class="container">
-    <div class="header">Talk to Md Hajiimran</div>
-
-    <div class="messages" id="messages">
-      <div class="msg bot">
-        Heyy! 👋 What's up? You can ask me anything about myself — studies, goals, hobbies, or just chat casually 😄
-      </div>
-    </div>
-
-    <div class="input-box">
-      <input type="text" id="userInput" placeholder="Ask me anything..." />
-      <button onclick="sendMessage()">Send</button>
+<div id="shell">
+  <div id="topbar">
+    <div class="lbadge bg-groq"><i class="ti ti-bolt"></i> Groq</div>
+    <div class="lbadge bg-claude"><i class="ti ti-brain"></i> Claude</div>
+    <div id="tb-title">Neural Chat · 8D</div>
+    <div id="mtoggle">
+      <button class="mbtn groq on" id="btn-groq" onclick="setModel('groq')">Groq</button>
+      <button class="mbtn claude" id="btn-claude" onclick="setModel('claude')">Claude</button>
     </div>
   </div>
 
-  <script>
-    function sendMessage() {
-      const input = document.getElementById("userInput");
-      const msg = input.value.trim();
-      if (!msg) return;
+  <div id="body">
+    <div id="sidebar">
+      <div id="sh">
+        <button id="nb" onclick="newChat()"><i class="ti ti-plus"></i> New session</button>
+      </div>
+      <div id="cl"></div>
+      <div id="apikey-section">
+        <p>Groq API Key</p>
+        <input id="apikey-inp" type="password" placeholder="gsk_..." oninput="saveKey(this.value)"/>
+        <div id="api-status" class="api-hint">Get free key at console.groq.com</div>
+      </div>
+      <div id="sf">
+        <p>Persona</p>
+        <select id="psel" onchange="changePersona()">
+          <option value="assistant">Assistant</option>
+          <option value="genius">Genius mode</option>
+          <option value="friend">Casual friend</option>
+          <option value="coder">Code expert</option>
+          <option value="coach">Life coach</option>
+        </select>
+      </div>
+    </div>
 
-      addMsg(msg, "user");
-      input.value = "";
+    <div id="main">
+      <div id="msgs">
+        <div id="empty">
+          <div class="eorb">⚡</div>
+          <p>Groq · Ultra-fast Llama 3</p>
+          <small>Paste your free key to start chatting</small>
+          <div class="chips">
+            <span class="chip" onclick="useChip(this)">What can you do?</span>
+            <span class="chip" onclick="useChip(this)">Tell me a fun fact</span>
+            <span class="chip" onclick="useChip(this)">Write Python code</span>
+            <span class="chip" onclick="useChip(this)">Explain black holes</span>
+          </div>
+        </div>
+      </div>
+      <div id="iz">
+        <div id="iw">
+          <textarea id="ti" placeholder="Message Groq AI..." rows="1" onkeydown="onKey(event)" oninput="resz(this)"></textarea>
+          <button id="sb" class="sg" onclick="sendMsg()" aria-label="Send"><i class="ti ti-send"></i></button>
+        </div>
+        <div id="hint">
+          <span>Enter to send · Shift+Enter for newline</span>
+          <span class="hb hbg" id="mhint">Groq · Llama 3 active</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-      const lowerMsg = msg.toLowerCase();
-      let reply = "Haha, nice one! 😄 What else is on your mind?";
+<script>
+const personas={
+  assistant:{sys:"You are a brilliant, helpful AI assistant. Be concise, sharp, and insightful."},
+  genius:{sys:"You are extraordinarily intelligent. Provide deep, nuanced, expert-level answers."},
+  friend:{sys:"You are a witty, warm AI friend. Be casual, funny when fitting, real and conversational."},
+  coder:{sys:"You are an elite software engineer. Provide expert coding help with clean code blocks always."},
+  coach:{sys:"You are a motivational life coach. Be inspiring, practical, and empathetic."}
+};
+let sessions=[{id:1,title:"New session",msgs:[],model:"groq",persona:"assistant"}];
+let activeId=1,curModel="groq",busy=false,groqKey="";
 
-      // Common casual conversation
-      if (lowerMsg.includes("hi") || lowerMsg.includes("hello") || lowerMsg.includes("hey") || lowerMsg.includes("sup")) {
-        reply = "Heyy! 😎 How's your day going?";
-      }
-      else if (lowerMsg.includes("how are you") || lowerMsg.includes("how r u") || lowerMsg.includes("hru")) {
-        reply = "I'm good bro! Just chilling, coding, and dreaming big 😄 You good?";
-      }
-      else if (lowerMsg.includes("what's up") || lowerMsg.includes("wassup") || lowerMsg.includes("wsg")) {
-        reply = "Not much, just vibing 😏 You tell me, what's good?";
-      }
-      else if (lowerMsg.includes("haha") || lowerMsg.includes("lol") || lowerMsg.includes("lmao")) {
-        reply = "Haha same! 😂 What's so funny?";
-      }
-      else if (lowerMsg.includes("nice") || lowerMsg.includes("cool") || lowerMsg.includes("awesome")) {
-        reply = "Thanks bro! 😄 You too!";
-      }
-      else if (lowerMsg.includes("thank") || lowerMsg.includes("thanks")) {
-        reply = "No problem at all! 😊 Anytime.";
-      }
-      else if (lowerMsg.includes("bye") || lowerMsg.includes("goodbye") || lowerMsg.includes("see you")) {
-        reply = "Bye bro! Take care 😄 Come back anytime!";
-      }
-      else if (lowerMsg.includes("joke") || lowerMsg.includes("funny")) {
-        reply = "Why do programmers prefer dark mode? Because light attracts bugs! 😂😂";
-      }
-      else if (lowerMsg.includes("compliment") || lowerMsg.includes("good looking") || lowerMsg.includes("handsome")) {
-        reply = "Haha stop it, you're making me blush 😅 Thanks though!";
-      }
-
-      // Personal info (updated to Md Hajiimran)
-      else if (lowerMsg.includes("who are you") || lowerMsg.includes("about you") || lowerMsg.includes("tell me about yourself") || lowerMsg.includes("about hajiimran") || lowerMsg.includes("who is hajiimran")) {
-        reply = "I'm Md Hajiimran from Shadnagar, Telangana. B.Tech IT student. Scored 8.2 CGPA in 10th, 691 in Inter (MPC). Single, focused on career, love coding & self-growth. Insta: https://www.instagram.com/official__ajju__786?igsh=am1lMTZzNW9rY3N2";
-      }
-      else if (lowerMsg.includes("goal") || lowerMsg.includes("future") || lowerMsg.includes("dream") || lowerMsg.includes("career")) {
-        reply = "I want to become a top software engineer, get a high-paying job, and make my family proud. Short-term: strong projects + internship. Long-term: live comfortably and help others.";
-      }
-      else if (lowerMsg.includes("hobby") || lowerMsg.includes("hobbies") || lowerMsg.includes("like to do") || lowerMsg.includes("free time")) {
-        reply = "Coding projects, playing volleyball, gaming (Free Fire), and watching Turkish dramas — especially with my favorite actress, Özge Törer!";
-      }
-      else if (lowerMsg.includes("actress") || lowerMsg.includes("ozge") || lowerMsg.includes("favorite actress")) {
-        reply = "Özge Törer! She's unreal in Kurulus Osman — such powerful acting!";
-      }
-      else if (lowerMsg.includes("study") || lowerMsg.includes("marks") || lowerMsg.includes("10th") || lowerMsg.includes("inter") || lowerMsg.includes("cgpa") || lowerMsg.includes("subject") || lowerMsg.includes("education")) {
-        reply = "8.2 CGPA in 10th, 691 in Intermediate (MPC). Favorite subjects: Physics and Computer Science — love the logic and creativity!";
-      }
-      else if (lowerMsg.includes("place") || lowerMsg.includes("from") || lowerMsg.includes("shadnagar") || lowerMsg.includes("telangana")) {
-        reply = "Shadnagar, Telangana — small town, big dreams, amazing food, and strong family vibes!";
-      }
-else if (
-  lowerMsg.includes("aim") ||
-  lowerMsg.includes("goal") ||
-  lowerMsg.includes("future") ||
-  lowerMsg.includes("dream")
-) {
-  reply = "My aim is to become a successful IT engineer, build meaningful projects, secure a high-paying job, and make my parents proud.";
+function saveKey(v){
+  groqKey=v.trim();
+  const st=document.getElementById("api-status");
+  if(groqKey.startsWith("gsk_")&&groqKey.length>20){st.className="api-ok";st.textContent="Key ready!";}
+  else if(groqKey.length>0){st.className="api-no";st.textContent="Should start with gsk_";}
+  else{st.className="api-hint";st.textContent="Get free key at console.groq.com";}
 }
-
-else if (
-  lowerMsg.includes("hobby") ||
-  lowerMsg.includes("hobbies")
-) {
-  reply = "My hobbies include coding projects, playing volleyball, gaming (Free Fire), learning new technologies, and watching Turkish dramas.";
+const getS=()=>sessions.find(s=>s.id===activeId);
+function setModel(m){
+  curModel=m;
+  document.getElementById("btn-groq").classList.toggle("on",m==="groq");
+  document.getElementById("btn-claude").classList.toggle("on",m==="claude");
+  document.getElementById("sb").className=m==="groq"?"sg":"sc";
+  const mh=document.getElementById("mhint");
+  mh.className="hb "+(m==="groq"?"hbg":"hbc");
+  mh.textContent=m==="groq"?"Groq · Llama 3 active":"Claude active";
+  document.getElementById("ti").placeholder=m==="groq"?"Message Groq AI...":"Message Claude...";
 }
-
-else if (
-  lowerMsg.includes("habit") ||
-  lowerMsg.includes("habits") ||
-  lowerMsg.includes("daily routine")
-) {
-  reply = "My daily habits are practicing coding regularly, thinking deeply before making decisions, staying calm, and focusing on self-improvement.";
+function renderSidebar(){
+  const el=document.getElementById("cl");el.innerHTML="";
+  sessions.forEach(s=>{
+    const d=document.createElement("div");
+    d.className="ci"+(s.id===activeId?" on":"");
+    d.innerHTML=`<span class="cdot ${s.model==="groq"?"dg":"dc"}"></span><span>${s.title}</span>`;
+    d.onclick=()=>switchChat(s.id);el.appendChild(d);
+  });
 }
-
-else if (
-  lowerMsg.includes("love") ||
-  lowerMsg.includes("relationship") ||
-  lowerMsg.includes("feelings")
-) {
-  reply = "I believe in real love, emotional bonding, loyalty, and honesty. I feel deeply, get attached easily, and stay committed.";
+function switchChat(id){activeId=id;const s=getS();curModel=s.model;setModel(curModel);document.getElementById("psel").value=s.persona;renderSidebar();renderMsgs();}
+function newChat(){const id=Date.now();sessions.unshift({id,title:"New session",msgs:[],model:curModel,persona:document.getElementById("psel").value});activeId=id;renderSidebar();renderMsgs();}
+function changePersona(){getS().persona=document.getElementById("psel").value;}
+function renderMsgs(){
+  const el=document.getElementById("msgs"),s=getS();el.innerHTML="";
+  if(!s.msgs.length){el.innerHTML=`<div id="empty"><div class="eorb">⚡</div><p>Groq · Ultra-fast Llama 3</p><small>Paste your free key to start</small><div class="chips"><span class="chip" onclick="useChip(this)">What can you do?</span><span class="chip" onclick="useChip(this)">Tell me a fun fact</span><span class="chip" onclick="useChip(this)">Write Python code</span><span class="chip" onclick="useChip(this)">Explain black holes</span></div></div>`;return;}
+  s.msgs.forEach(m=>addBubble(m.role,m.content,m.model,false));el.scrollTop=el.scrollHeight;
 }
-
-else if (
-  lowerMsg.includes("pain") ||
-  lowerMsg.includes("hurt") ||
-  lowerMsg.includes("sad")
-) {
-  reply = "I’ve experienced emotional pain and silent struggles. Those moments shaped me into a stronger and more mature person.";
+function addBubble(role,text,model,scroll=true){
+  const el=document.getElementById("msgs");
+  const emp=document.getElementById("empty");if(emp)emp.remove();
+  const row=document.createElement("div");row.className="mrow"+(role==="user"?" usr":"");
+  if(role==="assistant"){const ico=document.createElement("div");ico.className="aico "+(model==="groq"?"ico-groq":"ico-claude");ico.textContent=model==="groq"?"GQ":"AI";row.appendChild(ico);}
+  const wrap=document.createElement("div");wrap.className="bwrap";
+  if(role==="assistant"){const tag=document.createElement("div");tag.className="mtag "+(model==="groq"?"tg":"tc");tag.textContent=model==="groq"?"Groq · Llama 3":"Claude";wrap.appendChild(tag);}
+  const bub=document.createElement("div");bub.className="bub "+(role==="user"?"bu":(model==="groq"?"bg":"bc"));bub.textContent=text;
+  wrap.appendChild(bub);row.appendChild(wrap);el.appendChild(row);
+  if(scroll)el.scrollTop=el.scrollHeight;
 }
-
-else if (
-  lowerMsg.includes("nature") ||
-  lowerMsg.includes("personality") ||
-  lowerMsg.includes("type of person")
-) {
-  reply = "I’m calm, emotional, loyal, respectful, and thoughtful. I speak less, observe more, and value actions over words.";
+function showTyping(model){
+  const el=document.getElementById("msgs");
+  const row=document.createElement("div");row.className="mrow";row.id="typ";
+  const ico=document.createElement("div");ico.className="aico "+(model==="groq"?"ico-groq":"ico-claude");ico.textContent=model==="groq"?"GQ":"AI";row.appendChild(ico);
+  const bub=document.createElement("div");bub.className="bub "+(model==="groq"?"bg":"bc")+" dots "+(model==="groq"?"dg-dots":"dc-dots");bub.innerHTML="<span></span><span></span><span></span>";
+  row.appendChild(bub);el.appendChild(row);el.scrollTop=el.scrollHeight;
 }
-
-else if (
-  lowerMsg.includes("good habit") ||
-  lowerMsg.includes("strength")
-) {
-  reply = "My strengths are honesty, patience, discipline, loyalty, and staying focused on my goals.";
+function hideTyping(){const t=document.getElementById("typ");if(t)t.remove();}
+function updateTitle(text){const s=getS();if(s.title==="New session"&&text.length>2){s.title=text.slice(0,26)+(text.length>26?"…":"");renderSidebar();}}
+async function sendMsg(){
+  if(busy)return;
+  const inp=document.getElementById("ti"),text=inp.value.trim();if(!text)return;
+  inp.value="";resz(inp);
+  const s=getS();s.model=curModel;busy=true;document.getElementById("sb").disabled=true;
+  s.msgs.push({role:"user",content:text,model:curModel});addBubble("user",text,curModel);updateTitle(text);showTyping(curModel);
+  const persona=personas[s.persona]||personas.assistant;
+  const history=s.msgs.filter(m=>m.role!=="system").map(m=>({role:m.role,content:m.content}));
+  if(curModel==="groq"){
+    if(!groqKey||!groqKey.startsWith("gsk_")){hideTyping();const row=document.createElement("div");row.className="mrow";const bub=document.createElement("div");bub.className="bub berr";bub.textContent="Paste your Groq API key in the sidebar. Get it free at console.groq.com";row.appendChild(bub);document.getElementById("msgs").appendChild(row);busy=false;document.getElementById("sb").disabled=false;return;}
+    try{
+      const res=await fetch("https://api.groq.com/openai/v1/chat/completions",{method:"POST",headers:{"Content-Type":"application/json","Authorization":"Bearer "+groqKey},body:JSON.stringify({model:"llama3-70b-8192",messages:[{role:"system",content:persona.sys},...history],max_tokens:1000,temperature:0.7})});
+      const data=await res.json();hideTyping();
+      if(data.error){const row=document.createElement("div");row.className="mrow";const bub=document.createElement("div");bub.className="bub berr";bub.textContent="Groq error: "+data.error.message;row.appendChild(bub);document.getElementById("msgs").appendChild(row);}
+      else{const reply=data.choices?.[0]?.message?.content||"No response.";s.msgs.push({role:"assistant",content:reply,model:"groq"});addBubble("assistant",reply,"groq");}
+    }catch(e){hideTyping();const row=document.createElement("div");row.className="mrow";const bub=document.createElement("div");bub.className="bub berr";bub.textContent="Connection error. Check your key and internet.";row.appendChild(bub);document.getElementById("msgs").appendChild(row);}
+  }else{
+    try{
+      const res=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:1000,system:persona.sys,messages:history})});
+      const data=await res.json();hideTyping();
+      const reply=data.content?.find(b=>b.type==="text")?.text||"Something went wrong.";s.msgs.push({role:"assistant",content:reply,model:"claude"});addBubble("assistant",reply,"claude");
+    }catch(e){hideTyping();const row=document.createElement("div");row.className="mrow";const bub=document.createElement("div");bub.className="bub berr";bub.textContent="Connection error. Please retry.";row.appendChild(bub);document.getElementById("msgs").appendChild(row);}
+  }
+  busy=false;document.getElementById("sb").disabled=false;document.getElementById("ti").focus();
 }
-
-else if (
-  lowerMsg.includes("bad habit") ||
-  lowerMsg.includes("weakness")
-) {
-  reply = "Sometimes I overthink, trust people too easily, and keep my emotions inside instead of expressing them.";
-}
-
-else if (
-  lowerMsg.includes("favorite") ||
-  lowerMsg.includes("favourite")
-) {
-  reply = "My favorite things include spicy food, volleyball, programming, Turkish dramas, Özge Törer, and peaceful alone time.";
-}
-
-else if (
-  lowerMsg.includes("family") ||
-  lowerMsg.includes("home") ||
-  lowerMsg.includes("parents")
-) {
-  reply = "My family means everything to me. My favorite people are my mom, dad, brother, MOHD.Rabbani Irfan.";
-}
-else if (
-  lowerMsg.includes("college") ||
-  lowerMsg.includes("studing") 
-) {
-  reply = "present studing in LORDS ENGINNERING COLLEGE, B.E 1st year   IT .";
-}
-else if (
-  lowerMsg.includes("friends") ||
-  lowerMsg.includes("best friends")
-) {
-  reply = ", school : fayaz, adnan , moiz, sameer \n inter : salman , tameem , \n B.tech : Aayzan , rafi , maviya , muzakir , muquit  ";
-}
-else if (
-  lowerMsg.includes("dislike") ||
-  lowerMsg.includes("hate")
-) {
-  reply = "I dislike fake people, disrespect, lies, unnecessary drama, and  Girls.";
-}
-else if (
-  lowerMsg.includes("ok") ||
-  lowerMsg.includes("hmm")
-) {
-  reply = " Do u want to know any thing about Hajiimran or his instagramm id ";
-}
-
-else if (
-  lowerMsg.includes("mindset") ||
-  lowerMsg.includes("thinking")
-) {
-  reply = "I think deeply before acting and prefer understanding situations calmly rather than reacting emotionally.";
-}
-
-      else if (lowerMsg.includes("love") || lowerMsg.includes("girlfriend") || lowerMsg.includes("single") || lowerMsg.includes("relationship") || lowerMsg.includes("virgin")) {
-        reply = "Single and virgin. 100% focused on my studies and career right now — no time for distractions!";
-      }
-      else if (lowerMsg.includes("instagram") || lowerMsg.includes("insta")) {
-        reply = "Follow me: https://www.instagram.com/official__ajju__786?igsh=am1lMTZzNW9rY3N2";
-      }
-
-      // Fallback
-      else {
-        reply = "Haha, interesting  But not Updated ! 😄 Ask me anything — studies, goals, hobbies, or just random stuff. What's next?";
-      }
-
-      setTimeout(() => addMsg(reply, "bot"), 700);
-    }
-
-    function addMsg(text, type) {
-      const div = document.createElement("div");
-      div.className = `msg ${type}`;
-      div.textContent = text;
-      document.getElementById("messages").appendChild(div);
-      document.getElementById("messages").scrollTop = document.getElementById("messages").scrollHeight;
-    }
-  </script>
-
+function useChip(el){document.getElementById("ti").value=el.textContent;sendMsg();}
+function onKey(e){if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();sendMsg();}}
+function resz(el){el.style.height="auto";el.style.height=Math.min(el.scrollHeight,90)+"px";}
+renderSidebar();
+</script>
 </body>
 </html>
